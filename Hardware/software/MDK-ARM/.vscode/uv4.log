@@ -1,0 +1,29 @@
+*** Using Compiler 'V6.22', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'pump'
+../Drivers/User/OLED/OLED.c(57): error: call to undeclared function 'IIC_start'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   57 |         IIC_start();
+      |         ^
+../Drivers/User/OLED/OLED.c(58): error: call to undeclared function 'IIC_output'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   58 |         IIC_output(0x78);       // OLED地址
+      |         ^
+../Drivers/User/OLED/OLED.c(59): error: call to undeclared function 'IIC_read_ACK'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   59 |         IIC_read_ACK();
+      |         ^
+../Drivers/User/OLED/OLED.c(67): error: call to undeclared function 'IIC_end'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   67 |         IIC_end();
+      |         ^
+../Drivers/User/OLED/OLED.c(93): error: call to undeclared function 'IIC_start'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   93 |         IIC_start();
+      |         ^
+../Drivers/User/OLED/OLED.c(94): error: call to undeclared function 'IIC_output'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   94 |     IIC_output(0x78);       // OLED地址
+      |     ^
+../Drivers/User/OLED/OLED.c(95): error: call to undeclared function 'IIC_read_ACK'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   95 |     IIC_read_ACK();
+      |     ^
+7 errors generated.
+compiling OLED.c...
+compiling main.c...
+"pump\pump.axf" - 7 Error(s), 0 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:03
