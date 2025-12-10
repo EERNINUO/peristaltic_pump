@@ -2,8 +2,7 @@
 #define __OLED_H
 
 #include "stm32f1xx_hal.h"
-#include "cmsis_os.h"
-#include "gpio.h"
+#include "main.h"
 
 #define SPI_mode
 
@@ -20,6 +19,10 @@ void OLED_Clear(void);
 void OLED_ClearArea(uint8_t X, uint8_t Y, uint8_t Width, uint8_t Height);
 void OLED_ShowImage(uint8_t X, uint8_t Y, uint8_t Width, uint8_t Height, uint8_t* Image);
 void OLED_ShowChar(uint8_t X, uint8_t Y, char Char);
+void OLED_ShowChar(uint8_t X, uint8_t Y, char Char);
+void OLED_ShowOppositeChar(uint8_t X, uint8_t Y, char Char);
 void OLED_ShowString(uint8_t X, uint8_t Y, char *String);
+void OLED_ShowOppositeString(uint8_t X, uint8_t Y, char *String);
+void OLED_printf(uint8_t X, uint8_t Y, char *str, ...);
 
 #endif // __OLED_H

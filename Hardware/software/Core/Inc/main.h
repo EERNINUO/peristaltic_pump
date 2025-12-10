@@ -61,12 +61,12 @@ void Error_Handler(void);
 #define Encoder_Key_GPIO_Port GPIOB
 #define DIR_Pin GPIO_PIN_10
 #define DIR_GPIO_Port GPIOB
-#define M0_Pin GPIO_PIN_12
-#define M0_GPIO_Port GPIOB
+#define M2_Pin GPIO_PIN_12
+#define M2_GPIO_Port GPIOB
 #define M1_Pin GPIO_PIN_13
 #define M1_GPIO_Port GPIOB
-#define M2_Pin GPIO_PIN_14
-#define M2_GPIO_Port GPIOB
+#define M0_Pin GPIO_PIN_14
+#define M0_GPIO_Port GPIOB
 #define EN_Pin GPIO_PIN_15
 #define EN_GPIO_Port GPIOB
 #define STEP_Pin GPIO_PIN_8

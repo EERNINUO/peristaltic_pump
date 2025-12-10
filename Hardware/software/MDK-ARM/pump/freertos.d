@@ -32,4 +32,4 @@ pump/freertos.o: ..\Core\Src\freertos.c \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
-  ..\Drivers\User\OLED\OLED.h ..\Core\Inc\gpio.h
+  ..\Drivers\User\OLED\OLED.h ..\Drivers\User\Motor\Motor.h

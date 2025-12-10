@@ -21,17 +21,21 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.3.0.0
 Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
-C:\Users\18902\Desktop\code\pump\Hardware\pump\MDK-ARM\pump.uvprojx
-Project File Date:  12/04/2025
+C:\Users\18902\Desktop\code\pump\peristaltic_pump\Hardware\software\MDK-ARM\pump.uvprojx
+Project File Date:  12/10/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.22', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'pump'
-compiling freertos.c...
+../Core/Src/UI.c(52): warning: You shuld implement the UI update code here [-W#warnings]
+   52 |         #warning You shuld implement the UI update code here
+      |          ^
+1 warning generated.
+compiling UI.c...
 linking...
-Program Size: Code=21008 RO-data=1932 RW-data=16 ZI-data=9528  
+Program Size: Code=31808 RO-data=2644 RW-data=64 ZI-data=9592  
 FromELF: creating hex file...
-"pump\pump.axf" - 0 Error(s), 0 Warning(s).
+"pump\pump.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 

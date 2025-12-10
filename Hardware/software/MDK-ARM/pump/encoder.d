@@ -1,4 +1,5 @@
-pump/ui.o: ..\Core\Src\UI.c ..\Core\Inc\UI.h \
+pump/encoder.o: ..\Drivers\User\Encoder\Encoder.c \
+  ..\Drivers\User\Encoder\Encoder.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h \
   ..\Core\Inc\stm32f1xx_hal_conf.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h \
@@ -21,6 +22,5 @@ pump/ui.o: ..\Core\Src\UI.c ..\Core\Inc\UI.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_spi.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h \
-  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
-  ..\Drivers\User\OLED\OLED.h ..\Core\Inc\main.h \
-  ..\Drivers\User\Motor\Motor.h ..\Drivers\User\Encoder\Encoder.h
+  ..\Core\Inc\main.h \
+  ..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h

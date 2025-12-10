@@ -1,6 +1,8 @@
 #include "OLED.h"
 #include "OLED_font.h"
+#include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
 extern SPI_HandleTypeDef hspi1;
 
@@ -164,6 +166,43 @@ void OLED_ShowChar(uint8_t X, uint8_t Y, char Char){
 	OLED_ShowImage(X, Y, ENGLISH_WIDTH, ENGLISH_HEIGHT, (uint8_t*)OLED_F8X16[index]);
 }
 
+void OLED_ShowOppositeChar(uint8_t X, uint8_t Y, char Char){
+    uint8_t oppositeChar[16];
+	if (Char < 32 || Char > 127) return; // 只支持 ASCII 32~127
+	// 确定字符在数组中的位置
+	uint8_t index = Char - ' ';
+	for (uint8_t i = 0; i < ENGLISH_WIDTH * ENGLISH_HEIGHT / 8; i++){
+		oppositeChar[i] = ~OLED_F8X16[index][i];
+	}
+	OLED_ShowImage(X, Y, ENGLISH_WIDTH, ENGLISH_HEIGHT, (uint8_t*)oppositeChar);
+}
+
+void OLED_ShowOppositeString(uint8_t X, uint8_t Y, char *String){
+    // 字符串为空或页数超出范围，返回错误
+    if (!String || Y >= OLED_HEIGHT) return;
+
+    uint8_t x = X;
+    uint8_t y = Y;
+
+    for (uint8_t i = 0; String[i] != '\0'; i++){
+        if (X > 128) break; // 屏幕已满
+
+        if (String[i] == '\n') { // 手动换行
+            x = X;
+            y += ENGLISH_HEIGHT;
+            continue;
+        }
+        // 自动换行：当前行已满
+        if (x + ENGLISH_WIDTH > 128){
+            x = X;
+            y += ENGLISH_HEIGHT;
+            if (y >= ENGLISH_HEIGHT) break;
+        }
+        OLED_ShowOppositeChar(x, y, String[i]);
+        x += ENGLISH_WIDTH;
+    }
+}
+
 void OLED_ShowString(uint8_t X, uint8_t Y, char *String){
     // 字符串为空或页数超出范围，返回错误
     if (!String || Y >= OLED_HEIGHT) return;
@@ -188,4 +227,15 @@ void OLED_ShowString(uint8_t X, uint8_t Y, char *String){
         OLED_ShowChar(x, y, String[i]);
         x += ENGLISH_WIDTH;
     }
+}
+
+void OLED_printf(uint8_t X, uint8_t Y, char *str, ...){
+    char str_buf[16] = {0};
+    va_list args;
+
+    va_start(args, str);
+    vsprintf(str_buf, str, args);
+    va_end(args);
+
+    OLED_ShowString(X, Y, str_buf);
 }

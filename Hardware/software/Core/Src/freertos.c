@@ -22,11 +22,11 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
-#include "OLED.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "OLED.h"
+#include "Motor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,7 +46,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+extern TIM_HandleTypeDef htim1;
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -62,6 +62,18 @@ const osThreadAttr_t UI_Task_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityHigh,
 };
+/* Definitions for Encoder_Task */
+osThreadId_t Encoder_TaskHandle;
+const osThreadAttr_t Encoder_Task_attributes = {
+  .name = "Encoder_Task",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal,
+};
+/* Definitions for OLEDUpdate_Timer */
+osTimerId_t OLEDUpdate_TimerHandle;
+const osTimerAttr_t OLEDUpdate_Timer_attributes = {
+  .name = "OLEDUpdate_Timer"
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -70,6 +82,8 @@ const osThreadAttr_t UI_Task_attributes = {
 
 void StartDefaultTask(void *argument);
 extern void start_UITask(void *argument);
+extern void Start_EncoderTask(void *argument);
+void OLEDUpdate_Callback(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -91,6 +105,10 @@ void MX_FREERTOS_Init(void) {
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
+  /* Create the timer(s) */
+  /* creation of OLEDUpdate_Timer */
+  OLEDUpdate_TimerHandle = osTimerNew(OLEDUpdate_Callback, osTimerPeriodic, NULL, &OLEDUpdate_Timer_attributes);
+
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
@@ -105,6 +123,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of UI_Task */
   UI_TaskHandle = osThreadNew(start_UITask, NULL, &UI_Task_attributes);
+
+  /* creation of Encoder_Task */
+  Encoder_TaskHandle = osThreadNew(Start_EncoderTask, NULL, &Encoder_Task_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -125,14 +146,28 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
-  /* USER CODE BEGIN StartDefaultTask */ 
+  /* USER CODE BEGIN StartDefaultTask */
+  osTimerStart(OLEDUpdate_TimerHandle, 10);
+
+  osDelay(3000);
+  Motor_Init();
+  Motor_SetMode(Motor_QuantitaveMode);
+  Motor_SetSpeed(60);
+  Motor_SetQuantitave_ByStep(200*32);
   /* Infinite loop */
   for(;;)
   {
-    osDelay(3000);
-    OLED_ShowString(8,0,"Hello");
-  }
+    
+  } 
   /* USER CODE END StartDefaultTask */
+}
+
+/* OLEDUpdate_Callback function */
+void OLEDUpdate_Callback(void *argument)
+{
+  /* USER CODE BEGIN OLEDUpdate_Callback */
+  // OLED_update();
+  /* USER CODE END OLEDUpdate_Callback */
 }
 
 /* Private application code --------------------------------------------------*/

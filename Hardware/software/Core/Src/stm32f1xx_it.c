@@ -22,6 +22,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Motor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,6 +57,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_spi1_tx;
+extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN EV */
@@ -175,6 +177,20 @@ void DMA1_Channel3_IRQHandler(void)
 }
 
 /**
+  * @brief This function handles TIM1 update interrupt.
+  */
+void TIM1_UP_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM1_UP_IRQn 0 */
+
+  /* USER CODE END TIM1_UP_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim1);
+  /* USER CODE BEGIN TIM1_UP_IRQn 1 */
+
+  /* USER CODE END TIM1_UP_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM4 global interrupt.
   */
 void TIM4_IRQHandler(void)
@@ -192,4 +208,19 @@ void TIM4_IRQHandler(void)
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi){
   HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, GPIO_PIN_SET);
 }
+
+
+/**
+  * @brief  定时器周期中断回调函数
+  * @param  htim: 定时器句柄指针
+  * @retval None
+  * @note   该函数在main.c的HAL_TIM_PeriodElapsedCallback中调用, 因为TIM1
+  * 和TIM4共用一个中断，但是由于TIM4被配置为HAL库Systick定时器，所以CubeMX将
+  * HAL_TIM_PeriodElapsedCallback()函数生成在main.c中，为保证代码可读性，将
+  * TIM1的回调函数列到该文件中，在main.c中调用
+  */
+void HAL_TIM1_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+  RCRBatch_Update();
+}
+
 /* USER CODE END 1 */

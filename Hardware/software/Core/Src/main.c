@@ -26,6 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stm32f1xx_it.h"
 #include "OLED.h"
 /* USER CODE END Includes */
 
@@ -177,13 +178,15 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-
+  if (htim->Instance == TIM1) {
+    HAL_TIM1_PeriodElapsedCallback(htim);
+  }
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM4) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
+  
   /* USER CODE END Callback 1 */
 }
 
